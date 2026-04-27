@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(winget install *)",
+      "Bash(az login *)",
+      "PowerShell(az login --use-device-code 2>&1)",
+      "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); az --version 2>&1 | Select-Object -First 3)",
+      "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); az login --use-device-code 2>&1)",
+      "Bash(grep -qE \"To sign in|https://microsoft|code [A-Z0-9]{8,}\" \"C:\\\\Users\\\\I10STU~1\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--dotNetProjects-ParkShareApi-ParkShareApi\\\\d99eca11-712c-4bce-ab23-7c9b74803b68\\\\tasks\\\\bthlmjpll.output\")",
+      "Bash(dotnet remove *)",
+      "PowerShell(Stop-Process -Name \"ParkShareApi\" -Force -ErrorAction SilentlyContinue)",
+      "Bash(gh --version)",
+      "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); gh --version 2>&1 | Select-Object -First 1)"
+    ]
+  }
+}
