@@ -4,10 +4,10 @@ A peer-to-peer parking marketplace API built with ASP.NET Core. Users can list t
 
 ## Tech Stack
 
-- **.NET 10** / ASP.NET Core Web API
-- **Entity Framework Core 9** with **PostgreSQL** (Npgsql provider)
-- **Swashbuckle** for Swagger/OpenAPI docs
-- **Docker** (multi-stage build)
+- **.NET 10** / ASP.NET Core Web API (`LangVersion 14`, nullable enabled)
+- **Entity Framework Core 10** with **PostgreSQL** (Npgsql.EntityFrameworkCore.PostgreSQL 10)
+- **Swashbuckle.AspNetCore 10** for Swagger / OpenAPI docs
+- **Docker** (multi-stage build on `mcr.microsoft.com/dotnet/sdk:10.0`)
 
 ## Project Structure
 
@@ -62,12 +62,16 @@ Swagger UI is mounted at the root of the app:
 
 ### Run with Docker
 
+The Dockerfile expects the `ParkShareApi/` directory as the build context:
+
 ```bash
 docker build -t parkshare-api -f ParkShareApi/Dockerfile ParkShareApi
 docker run -p 8080:8080 \
   -e ConnectionStrings__DefaultConnection="Host=host.docker.internal;Port=5432;Database=ParkShareDb;Username=postgres;Password=postgres" \
   parkshare-api
 ```
+
+The container listens on port `8080` (`ASPNETCORE_URLS=http://+:8080`).
 
 ## API Overview
 
@@ -116,6 +120,15 @@ Migrations are applied automatically on app startup (`db.Database.Migrate()` in 
 ```bash
 dotnet ef database update
 ```
+
+## CI / CD
+
+Two GitHub Actions workflows live under [.github/workflows](.github/workflows):
+
+- **[docker-image.yml](.github/workflows/docker-image.yml)** — on every push or PR to `master`, builds the Docker image (using `./ParkShareApi` as the build context) and pushes it to GitHub Container Registry as:
+  - `ghcr.io/<owner>/<repo>:latest`
+  - `ghcr.io/<owner>/<repo>:<commit-sha>`
+- **[deploy_webhook.yml](.github/workflows/deploy_webhook.yml)** — runs after a successful `Docker Image CI` run and pings the deploy webhook to roll out the new image.
 
 ## Notes
 
