@@ -1,0 +1,16 @@
+name: Trigger Deploy Webhook
+
+on:
+  workflow_run:
+    workflows: [ "Docker Image CI" ]
+    types: [ completed ]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+    - name: Call deploy webhook
+      run: |
+        curl -X GET https://i10host.com/api/deploy/LChKPXd11LwFgNPdhZleb
