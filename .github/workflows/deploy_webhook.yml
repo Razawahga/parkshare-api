@@ -13,4 +13,4 @@ jobs:
     steps:
     - name: Call deploy webhook
       run: |
-        curl -X GET https://i10host.com/api/deploy/LChKPXd11LwFgNPdhZleb
+        curl -X GET https://i10host.com/api/deploy/LChKPXd11LwFgNPdhZl
